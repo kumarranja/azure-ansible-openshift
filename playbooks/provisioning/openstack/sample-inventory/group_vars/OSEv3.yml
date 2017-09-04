@@ -22,3 +22,5 @@ openshift_override_hostname_check: true
 # NOTE(shadower): Always switch to root on the OSEv3 nodes.
 # openshift-ansible requires an explicit `become`.
 ansible_become: true
+
+# THIS IS A CHANGE TO TEST THE OPENSTACK E2E WORKS ON MASTER
