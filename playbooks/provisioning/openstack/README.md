@@ -1,5 +1,8 @@
 # OpenStack Provisioning
 
+
+THIS IS A CI TEST
+
 This repository contains playbooks and Heat templates to provision
 OpenStack resources (servers, networking, volumes, security groups,
 etc.). The result is an environment ready for openshift-ansible.
