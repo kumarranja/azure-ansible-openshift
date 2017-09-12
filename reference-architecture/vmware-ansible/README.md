@@ -11,6 +11,11 @@ Internal DNS should be set up to reflect the number of nodes in the environment.
 
 ### OpenShift Playbooks
 The code in this repository handles all of the VMware specific components except for the installation of OpenShift. We rely on the OpenShift playbooks from the openshift-ansible-playbooks rpm. You will need the rpm installed on the workstation before using ocp-on-vmware.py.
+```bash
+wget https://raw.githubusercontent.com/openshift/openshift-ansible-contrib/vmw-3.6/reference-architecture/vmware-ansible/scripts/setup_ansible.sh
+```
+
+The following commands can be executed by themselves or via the script ./setup_ansible.sh
 
 ```bash
 echo "Subscribing and enabling the repos we need for deployment"
