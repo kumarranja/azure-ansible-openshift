@@ -8,5 +8,8 @@ if [ "${RUN_OPENSTACK_CI:-}" != "true" ]; then
     exit
 fi
 
+echo RESTORING DNS
+sudo cp resolv.conf.orig /etc/resolv.conf
+
 openstack keypair delete "$KEYPAIR_NAME" || true
 openstack stack delete --wait --yes "$ENV_ID.example.com" || true

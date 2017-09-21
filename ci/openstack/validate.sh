@@ -2,11 +2,19 @@
 
 set -euox pipefail
 
+
 source ci/openstack/vars.sh
 if [ "${RUN_OPENSTACK_CI:-}" != "true" ]; then
     echo RUN_OPENSTACK_CI is set to false, skipping the openstack end to end test.
     exit
 fi
+
+echo SET UP DNS
+cp /etc/resolv.conf resolv.conf.orig
+DNS_IP=$(openstack server show dns-0.$ENV_ID.example.com --format value --column addresses | awk '{print $2}')
+grep -v '^nameserver' resolv.conf.orig > resolv.conf.openshift
+echo nameserver "$DNS_IP" >> resolv.conf.openshift
+sudo cp resolv.conf.openshift /etc/resolv.conf
 
 mkdir -p bin
 scp -o "StrictHostKeyChecking no" -o "UserKnownHostsFile /dev/null" openshift@master-0.$ENV_ID.example.com:/usr/bin/oc bin/
