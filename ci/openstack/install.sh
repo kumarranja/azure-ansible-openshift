@@ -19,4 +19,4 @@ git checkout "${OPENSHIFT_ANSIBLE_COMMIT:-master}"
 git status
 cd ../openshift-ansible-contrib
 
-pip install ansible shade dnspython python-openstackclient python-heatclient
+pip install ansible==2.3.2.0 shade dnspython python-openstackclient python-heatclient
