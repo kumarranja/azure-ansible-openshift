@@ -37,6 +37,7 @@ node_ingress_cidr: "$PUBLIC_IP/32"
 ssh_ingress_cidr: "$PUBLIC_IP/32"
 manage_packages: False
 ephemeral_volumes: True
+openstack_inventory: dynamic
 EOF
 
 cat << EOF >> "$INVENTORY"/group_vars/OSEv3.yml
@@ -69,7 +70,3 @@ echo INSTALL OPENSHIFT
 
 ansible-galaxy install -r playbooks/provisioning/openstack/galaxy-requirements.yaml -p roles
 ansible-playbook --timeout 180 --user openshift -i "$INVENTORY" playbooks/provisioning/openstack/provision.yaml -e @extra-vars.yaml
-
-echo
-echo INVENTORY hosts file:
-cat $INVENTORY/hosts
