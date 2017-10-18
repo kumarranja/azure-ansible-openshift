@@ -14,6 +14,7 @@
 
 # The hostname module does not work on RHEL version 7.5 with Ansible versions < 2.5
 - name: Checking if this version of RHEL is affected by the hostname problem
+  set_fact:
     rhel75: "{{ (ansible_distribution == 'RedHat') and (ansible_distribution_version | version_compare('7.5', '>=')) }}"
 
 - name: Setting hostname and DNS domain
