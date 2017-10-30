@@ -1,0 +1,101 @@
+---
+
+- name: Install git
+  yum:
+    name: git
+    state: present
+  become: true
+
+- name: Install python27
+  yum:
+    name: python27
+    state: present
+  become: true
+
+- name: Install atomic-openshift-utils
+  yum:
+    name: atomic-openshift-utils
+    state: present
+  become: true
+
+- name: Install python-click
+  yum:
+    name: python-click
+    state: present
+  become: true
+
+- name: Install python-ldap
+  yum:
+    name: python-ldap
+    state: present
+  become: true
+
+- name: Install ansible-2.3
+  yum:
+    name: ansible-2.3
+    state: present
+  become: true
+
+- name: Install python-iptools
+  yum:
+    name: python-iptools
+    state: present
+  become: true
+
+- name: Install python2-pyvmomi
+  yum:
+    name: python2-pyvmomi
+    state: present
+  become: true
+
+- name: Install epel-release-latest-7.noarch.rpm
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: present
+  become: true
+
+- name: Create tower organization
+  tower_organization:
+    name: "Default"
+    description: "Set to Default since the trial license only allows one organization. You can change it if you have deep pockets"
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Add tower project for openshift-ansible-contrib
+  tower_project:
+    name: "openshift-ansible-contrib"
+    description: "sync openshift-ansible-contrib"
+    organization: "Default"
+    scm_url: https://github.com/openshift/openshift-ansible-contrib.git
+    scm_type: git
+    scm_branch: vmw-3.6
+    scm_update_on_launch: true
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Add tower project for ansible-redhat-access-insights-client
+  tower_project:
+    name: "ansible-redhat-access-insights-client"
+    description: "sync ansible-redhat-access-insights-client"
+    organization: "Default"
+    scm_url: https://github.com/strategicdesignteam/ansible-redhat-access-insights-client.git
+    scm_type: git
+    scm_branch: master
+    scm_update_on_launch: true
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Add tower project for cfme-ansible
+  tower_project:
+    name: "cfme-ansible"
+    description: "sync cfme-ansible"
+    organization: "Default"
+    scm_url: https://github.com/strategicdesignteam/cfme-ansible.git
+    scm_type: git
+    scm_branch: master
+    scm_update_on_launch: true
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+
+
