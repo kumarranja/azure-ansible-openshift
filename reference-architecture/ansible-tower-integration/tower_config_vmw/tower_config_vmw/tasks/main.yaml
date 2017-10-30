@@ -6,6 +6,45 @@
     state: present
   become: true
 
+- name: subscription-manager register
+  command: subscription-manager register --username={{ RHSM_USERNAME }} --password={{ RHSM_PASSWORD }}
+  become: true
+
+- name: subscription-manager list
+  command: subscription-manager list --available --pool-only --matches="Red Hat OpenShift Container Platform*"
+  become: true
+  register: rhsmout
+
+#- debug:
+#    var: rhsmout
+
+#- debug:
+#    var: rhsmout.stdout_lines[0]
+
+- name: subscription-manager Red Hat OpenShift Container Platform, Premium
+  command: subscription-manager attach --pool={{ rhsmout.stdout_lines[0] }}
+  become: true
+
+- name: subscription-manager repos --enable=rhel-7-fast-datapath-rpms
+  command: subscription-manager repos --enable=rhel-7-fast-datapath-rpms
+  become: true
+
+- name: subscription-manager repos --enable=rhel-server-rhscl-7-rpms
+  command: subscription-manager repos --enable=rhel-server-rhscl-7-rpms
+  become: true
+
+- name: subscription-manager repos --enable=rhel-7-server-ose-3.6-rpms
+  command: subscription-manager repos --enable=rhel-7-server-ose-3.6-rpms
+  become: true
+
+- name: subscription-manager repos --enable=rhel-7-server-rpms
+  command: subscription-manager repos --enable=rhel-7-server-rpms
+  become: true
+
+- name: subscription-manager repos --enable=rhel-7-server-extras-rpms
+  command: subscription-manager repos --enable=rhel-7-server-extras-rpms
+  become: true
+
 - name: Install python27
   yum:
     name: python27
@@ -30,9 +69,15 @@
     state: present
   become: true
 
-- name: Install ansible-2.3
+- name: Install ansible
   yum:
-    name: ansible-2.3
+    name: ansible
+    state: present
+  become: true
+
+- name: Install epel-release-latest-7.noarch.rpm
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     state: present
   become: true
 
@@ -45,12 +90,6 @@
 - name: Install python2-pyvmomi
   yum:
     name: python2-pyvmomi
-    state: present
-  become: true
-
-- name: Install epel-release-latest-7.noarch.rpm
-  yum:
-    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     state: present
   become: true
 
@@ -98,4 +137,5 @@
     tower_config_file: "~/.tower_cli.cfg"
 
 
-
+- name: Create workflow-ocp-vmw-install
+  command: tower-cli workflow create --name="workflow-ocp-vmw-install" --organization="Default" --description="A workflow for deploying OCP on VMW" -e @workflow-ocp-vmw-install-extravars.yaml
