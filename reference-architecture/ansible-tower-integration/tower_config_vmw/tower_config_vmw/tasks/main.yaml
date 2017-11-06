@@ -136,6 +136,48 @@
     state: present
     tower_config_file: "~/.tower_cli.cfg"
 
+- name: Add tower inventory
+  tower_inventory:
+    name: "vmw-inventory"
+    description: "Tower inventory for VMW"
+    organization: "Default"
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Add tower credential for machine
+  tower_credential:
+    name: vmw-privkey
+    kind: ssh
+    become_method: sudo
+    description: vmw-privkey
+    organization: "Default"
+    state: present
+    ssh_key_data: "{{ VMW_MACHINE_SSH_KEY }}"
+    username: root
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Add tower credential for vmw
+  tower_credential:
+    name: vmw
+    kind: vmware
+    description: vmware
+    host: "{{ VMW_HOST }}"
+    organization: "Default"
+    state: present
+    username: "{{ VMW_USERNAME }}"
+    password: "{{ VMW_PASSWORD }}"
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Add tower group
+  tower_group:
+    name: vmw
+    description: "Tower Group for VMW"
+    source: vmware
+    credential: vmw
+    inventory: "vmw-inventory"
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
 
 - name: Create workflow-ocp-vmw-install
   command: tower-cli workflow create --name="workflow-ocp-vmw-install" --organization="Default" --description="A workflow for deploying OCP on VMW" -e @workflow-ocp-vmw-install-extravars.yaml
+

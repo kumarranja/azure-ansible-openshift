@@ -2,7 +2,9 @@
 console_port: "8443"
 deployment_type: "openshift-enterprise"
 openshift_vers: "v3_6"
+vcenter_host: "CHANGEME"
 vcenter_username: "administrator@vsphere.local"
+vcenter_password: "CHANGEME"
 vcenter_template_name: "ocp-server-template-2.0.2"
 vcenter_folder: "ocp36"
 vcenter_resource_pool: "ocp36"
@@ -24,3 +26,17 @@ openshift_hosted_metrics_deploy: "false"
 openshift_sdn: "redhat/openshift-ovs-subnet"
 containerized: "false"
 container_storage: "none"
+rhel_subscription_user: ""
+rhel_subscription_pass: ""
+vm_dns: ""
+vm_gw: ""
+vm_netmask: ""
+public_hosted_zone: ""
+cluster_id:
+vcenter_datastore:
+vcenter_cluster:
+vcenter_datacenter:
+rhel_subscription_server:
+vm_ipaddr_start:
+ocp_hostname_prefix:
+ldap_fqdn:

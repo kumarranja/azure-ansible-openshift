@@ -1,5 +1,38 @@
 ---
 
+- name: Remove workflow-ocp-vmw-install
+  command: tower-cli workflow delete --name="workflow-ocp-vmw-install"
+
+- name: Remove tower group
+  tower_group:
+    name: vmw
+    inventory: "vmw-inventory"
+    state: absent
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Remove tower inventory
+  tower_inventory:
+    name: "vmw-inventory"
+    organization: "Default"
+    state: absent
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Remove tower credential for machine
+  tower_credential:
+    name: vmw-privkey
+    kind: ssh
+    organization: "Default"
+    state: absent
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Remove tower credential for vmw
+  tower_credential:
+    name: vmw
+    state: absent
+    kind: vmware
+    organization: "Default"
+    tower_config_file: "~/.tower_cli.cfg"
+
 - name: Remove tower project
   tower_project:
     name: "openshift-ansible-contrib"
@@ -24,3 +57,8 @@
     description: "Set to Default since the trial license only allows one organization. You can change it if you have deep pockets"
     state: absent
     tower_config_file: "~/.tower_cli.cfg"
+
+- name: subscription-manager unregister
+  command: subscription-manager unregister
+  become: true
+
