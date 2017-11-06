@@ -3,6 +3,76 @@
 - name: Remove workflow-ocp-vmw-install
   command: tower-cli workflow delete --name="workflow-ocp-vmw-install"
 
+- name: Remove vmw-ocp-demo template
+  tower_job_template:
+    name: vmw-ocp-demo
+    job_type: run
+    project: openshift-ansible-contrib
+    playbook: "ocp-demo.yaml"
+    state: absent
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Remove vmw-ocp-configure template
+  tower_job_template:
+    name: vmw-ocp-configure
+    job_type: run
+    project: openshift-ansible-contrib
+    playbook: "ocp-configure.yaml"
+    state: absent
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Remove vmw-ocp-install template
+  tower_job_template:
+    name: vmw-ocp-install
+    job_type: run
+    project: openshift-ansible-contrib
+    playbook: "ocp-install.yaml"
+    state: absent
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Remove vmw-haproxy template
+  tower_job_template:
+    name: vmw-haproxy
+    job_type: run
+    project: openshift-ansible-contrib
+    playbook: "haproxy.yaml"
+    state: absent
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Remove vmw-prod template
+  tower_job_template:
+    name: vmw-prod
+    job_type: run
+    project: openshift-ansible-contrib
+    playbook: "prod.yaml"
+    state: absent
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Remove vmw-nfs template
+  tower_job_template:
+    name: vmw-nfs
+    job_type: run
+    project: openshift-ansible-contrib
+    playbook: "nfs.yaml"
+    state: absent
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Remove vmw-setup template
+  tower_job_template:
+    name: vmw-setup
+    job_type: run
+    project: openshift-ansible-contrib
+    playbook: "setup.yaml"
+    state: absent
+    tower_config_file: "~/.tower_cli.cfg"
+
+
+
+
+
+
+
+
 - name: Remove tower group
   tower_group:
     name: vmw

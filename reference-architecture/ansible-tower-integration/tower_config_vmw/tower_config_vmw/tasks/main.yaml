@@ -178,6 +178,97 @@
     state: present
     tower_config_file: "~/.tower_cli.cfg"
 
+- name: Create vmw-setup job template
+  become: true
+  tower_job_template:
+    name: vmw-setup
+    job_type: run
+    inventory: vmw-inventory
+    project: openshift-ansible-contrib
+    playbook: "reference-architecture/vmware-ansible/playbooks/setup.yaml"
+    machine_credential: vmw-privkey
+    cloud_credential: vmw
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Create vmw-nfs job template
+  become: true
+  tower_job_template:
+    name: vmw-nfs
+    job_type: run
+    inventory: vmw-inventory
+    project: openshift-ansible-contrib
+    playbook: "reference-architecture/vmware-ansible/playbooks/nfs.yaml"
+    machine_credential: vmw-privkey
+    cloud_credential: vmw
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Create vmw-prod job template
+  become: true
+  tower_job_template:
+    name: vmw-prod
+    job_type: run
+    inventory: vmw-inventory
+    project: openshift-ansible-contrib
+    playbook: "reference-architecture/vmware-ansible/playbooks/prod.yaml"
+    machine_credential: vmw-privkey
+    cloud_credential: vmw
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Create vmw-haproxy job template
+  become: true
+  tower_job_template:
+    name: vmw-haproxy
+    job_type: run
+    inventory: vmw-inventory
+    project: openshift-ansible-contrib
+    playbook: "reference-architecture/vmware-ansible/playbooks/haproxy.yaml"
+    machine_credential: vmw-privkey
+    cloud_credential: vmw
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Create vmw-ocp-install job template
+  become: true
+  tower_job_template:
+    name: vmw-ocp-install
+    job_type: run
+    inventory: vmw-inventory
+    project: openshift-ansible-contrib
+    playbook: "reference-architecture/vmware-ansible/playbooks/ocp-install.yaml"
+    machine_credential: vmw-privkey
+    cloud_credential: vmw
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Create vmw-ocp-configure job template
+  become: true
+  tower_job_template:
+    name: vmw-ocp-configure
+    job_type: run
+    inventory: vmw-inventory
+    project: openshift-ansible-contrib
+    playbook: "reference-architecture/vmware-ansible/playbooks/ocp-configure.yaml"
+    machine_credential: vmw-privkey
+    cloud_credential: vmw
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
+- name: Create vmw-ocp-demo job template
+  become: true
+  tower_job_template:
+    name: vmw-ocp-demo
+    job_type: run
+    inventory: vmw-inventory
+    project: openshift-ansible-contrib
+    playbook: "reference-architecture/vmware-ansible/playbooks/ocp-demo.yaml"
+    machine_credential: vmw-privkey
+    cloud_credential: vmw
+    state: present
+    tower_config_file: "~/.tower_cli.cfg"
+
 - name: Create workflow-ocp-vmw-install
   command: tower-cli workflow create --name="workflow-ocp-vmw-install" --organization="Default" --description="A workflow for deploying OCP on VMW" -e @workflow-ocp-vmw-install-extravars.yaml
 
