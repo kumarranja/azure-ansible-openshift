@@ -3,9 +3,9 @@
   set_fact:
     new_hostname: "{{ custom_hostname | default(inventory_hostname_short) }}"
 
-- name: Setting FQDN Fact
+- name: Setting private FQDN Fact (defaults to public FQDN)
   set_fact:
-    new_fqdn: "{{ new_hostname }}.{{ full_dns_domain }}"
+    new_fqdn: "{{ new_hostname }}.{{ openshift_openstack_full_private_dns_domain }}"
 
 # Ansible 2.5 fixed the hostname module for RHEL 7.5:  https://github.com/ansible/ansible/pull/31839
 - name: Checking if this version of Ansible has a fix for the hostname module
@@ -17,7 +17,7 @@
   set_fact:
     rhel75: "{{ (ansible_distribution == 'RedHat') and (ansible_distribution_version | version_compare('7.5', '>=')) }}"
 
-- name: Setting hostname and DNS domain
+- name: Setting hostname and private DNS domain (defaults to the public DNS domain)
   hostname: name="{{ new_fqdn }}"
   # Use the hostname module when not on RHEL 7.5 or on the version of Ansible that fixed the hostname module.
   when: not rhel75 or hostname_module_fixed

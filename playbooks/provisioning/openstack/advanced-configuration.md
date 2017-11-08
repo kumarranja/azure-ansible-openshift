@@ -182,11 +182,19 @@ So the provisioned cluster nodes will start using those natively as
 default nameservers. Technically, this allows to deploy OpenShift clusters
 without dnsmasq proxies.
 
-The `env_id` and `public_dns_domain` will form the cluster's DNS domain all
-your servers will be under. With the default values, this will be
-`openshift.example.com`. For workloads, the default subdomain is 'apps'.
-That sudomain can be set as well by the `openshift_app_domain` variable in
-the inventory.
+The `openshift_openstack_clusterid` and `openshift_openstack_public_dns_domain`
+will form the cluster's DNS domain all your servers will be under. With the
+default values, this will be `openshift.example.com`. For workloads, the default
+subdomain is 'apps'. That sudomain can be set as well by the
+`openshift_app_domain` variable in the inventory.
+
+If you want to name your servers differently for public and private DNS records,
+specify `openshift_openstack_public_hostname_suffix` and/or
+`openshift_openstack_private_hostname_suffix`, which defaults to
+`openshift_openstack_clusterid`. You may additionally specify another
+`openshift_openstack_private_dns_domain` to override the default
+`openshift_openstack_public_dns_domain` for your servers as well. Note that
+the hostnames will be updated to match the private domain name and suffix.
 
 The `openstack_<role name>_hostname` is a set of variables used for customising
 hostnames of servers with a given role. When such a variable stays commented,
