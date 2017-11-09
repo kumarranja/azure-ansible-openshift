@@ -41,6 +41,12 @@
   when:
     - nsupdate_server_private is undefined
 
+- name: "Set the private DNS server to use the provisioned value for multiple hostnames"
+  set_fact:
+    nsupdate_key_secret_private_public: "{{ hostvars[groups['dns'][0]].nsupdate_keys['private-' + openshift_openstack_full_public_dns_domain].key_secret }}"
+  when:
+    - openshift_openstack_full_public_dns_domain != openshift_openstack_full_private_dns_domain
+
 - name: "Generate the private Add section for DNS"
   set_fact:
     private_named_records:
@@ -51,6 +57,19 @@
         key_secret: "{{ nsupdate_key_secret_private }}"
         key_algorithm: "{{ nsupdate_key_algorithm_private | lower }}"
         entries: "{{ private_records }}"
+
+- name: "Generate the private for public Add section for DNS"
+  set_fact:
+    private_named_records:
+      - view: "private"
+        zone: "{{ openshift_openstack_full_public_dns_domain }}"
+        server: "{{ nsupdate_server_private }}"
+        key_name: "{{ 'private-' + openshift_openstack_full_public_dns_domain }}"
+        key_secret: "{{ nsupdate_key_secret_private_public }}"
+        key_algorithm: "{{ nsupdate_key_algorithm_private | lower }}"
+        entries: "{{ private_records }}"
+  when:
+    - openshift_openstack_full_public_dns_domain != openshift_openstack_full_private_dns_domain
 
 - name: "Generate list of public A records"
   set_fact:
