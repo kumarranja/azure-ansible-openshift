@@ -194,7 +194,7 @@ specify `openshift_openstack_public_hostname_suffix` and/or
 `openshift_openstack_clusterid`. You may additionally specify another
 `openshift_openstack_private_dns_domain` to override the default
 `openshift_openstack_public_dns_domain` for your servers as well. Note that
-the hostnames will be updated to match the private domain name and suffix.
+the hostnames will not be updated.
 
 The `openstack_<role name>_hostname` is a set of variables used for customising
 hostnames of servers with a given role. When such a variable stays commented,
