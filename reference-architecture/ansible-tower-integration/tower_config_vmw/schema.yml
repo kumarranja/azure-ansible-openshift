@@ -1,6 +1,14 @@
 ---
-- job_template: vmw-infrastructure
+- job_template: vmw-setup
   success_nodes:
-  - inventory_source: REPLACEME
+  - job_template: vmw-nfs
     success_nodes:
-    - job_template: vmw-openshift-install
+    - job_template: vmw-prod
+      success_nodes:
+      - job_template: vmw-haproxy
+        success_nodes:
+        - job_template: vmw-ocp-install
+          success_nodes:
+          - job_template: vmw-ocp-configure
+            success_nodes:
+            - job_template: vmw-ocp-demo

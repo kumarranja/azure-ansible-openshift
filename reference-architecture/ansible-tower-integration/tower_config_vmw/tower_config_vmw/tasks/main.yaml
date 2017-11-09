@@ -272,3 +272,6 @@
 - name: Create workflow-ocp-vmw-install
   command: tower-cli workflow create --name="workflow-ocp-vmw-install" --organization="Default" --description="A workflow for deploying OCP on VMW" -e @workflow-ocp-vmw-install-extravars.yaml
 
+- name: Create a schema for workflow-ocp-vmw-install
+  command: tower-cli workflow schema workflow-ocp-vmw-install @schema.yml
+
